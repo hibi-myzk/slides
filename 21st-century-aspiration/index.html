@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+	h1, h2, h3, h4, h5, h6 { text-transform: none !important }
+	h1 { font-size:  2.4em !important; color: #33B490 !important }
+	h2 { color: #33B490 !important }
+	h3 { color: #EC5D57 !important }
+	.no-margin { margin: 0 !important }
+	.small-text { font-size: 0.8em !important }
+	.ex-large-text { font-size: 4em !important }
+	.red { color: red }
+	li { margin-bottom: 0.5em }
+	
+	blockquote:has(.quote) {
+		/* max-width: 500px; */
+		position: relative;
+		padding: 2em !important;
+		margin: 2em 0;
+		border: none !important;
+		box-shadow: none;
+	}
+	
+	blockquote:has(.quote)::before,
+	blockquote:has(.quote)::after {
+		display: inline-block;
+		position: absolute;
+		width: 4em;
+		height: 4em;
+		content: '';
+	}
+	
+	blockquote:has(.quote)::before {
+	    top: 0;
+	    left: 0;
+	    border-top: 3px solid #89b6d7;
+	    border-left: 3px solid #89b6d7;
+	    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2389b6d7%22%20d%3D%22M21.8%2012H18V9c0-1.7%201.3-3%203-3h.4c.6%200%201.1-.5%201.1-1.1V2.6c0-.6-.5-1.1-1.1-1.1H21c-4.1%200-7.5%203.4-7.5%207.5v11.2c0%201.2%201%202.2%202.2%202.2h6c1.2%200%202.2-1%202.2-2.2v-6C24%2013%2023%2012%2021.8%2012zM8.2%2012H4.5V9c0-1.7%201.3-3%203-3h.4C8.5%206%209%205.5%209%204.9V2.6c0-.6-.5-1.1-1.1-1.1h-.4C3.4%201.5%200%204.9%200%209v11.2c0%201.2%201%202.2%202.2%202.2h6c1.2%200%202.2-1%202.2-2.2v-6c.1-1.2-.9-2.2-2.2-2.2z%22%2F%3E%3C%2Fsvg%3E');
+	    background-position: top 35% left 35%;
+	    background-size: 1em;
+	    background-repeat: no-repeat;
+	}
+	
+	blockquote:has(.quote)::after {
+	    bottom: 0;
+	    right: 0;
+	    border-bottom: 3px solid #89b6d7;
+	    border-right: 3px solid #89b6d7;
+	}
+	
+	blockquote:has(.quote) p {
+	    margin-top: 0;
+	}
+	
+	blockquote:has(.quote) p:last-of-type {
+	   margin-bottom: 0;
+	}
+</style>
+
+# 今世紀の抱負 21
+
+イジゲングループ株式会社  
+Canary and Libero 室 室長  
+宮崎ひび  
+🍣🍣🍣🍣
+</div>
+
+<aside class="notes"><ul>
+<li>2024/01/22</li>
+<li><a href="https://engineercafe.connpass.com/event/307519/">エンジニアカフェ新年会 2024 - connpass</a></li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🍣 宮崎ひび
+
+https://hibi.miyazaki.jp
+
+- （元）株式会社トーフラボ代表
+	- 👉 イジゲングループ株式会社
+		- （西日本 FH グループ）
+- ソフトウェアエンジニア
+- シングルファーザー
+- その他あれこれ
+	- [OITA.md | Markdown City Oita](https://oita.md/) <!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 今世紀の抱負
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+<!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+（中略）
+</div></div></div></div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## One-World World から<br>多元的な未来へ
+</div></script></section><section  data-markdown><script type="text/template">
+（中略）
+</script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- 存在論的デザイン
+- [Pluriversal Design](https://www.designresearchsociety.org/cpages/sig-pluriversal-design)
+	- Pluriverse : 多元世界
+- [Actor–network theory (ANT)](https://en.wikipedia.org/wiki/Actor–network_theory)
+- <我 - それ> <我 - 汝>（マルティン・ブーバー）
+- Technodiversity
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+[Duke University Press - Designs for the Pluriverse](https://www.dukeupress.edu/designs-for-the-pluriverse)
+
+<img src="Clip 📎/思索/images/picture_pc_be1199e345d23514e549d73d961cccea.webp" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/エンジニアカフェ新年会 2024/images/Screenshot 2024-01-22 at 18.10.57.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><ul>
+<li><a href="https://twitter.com/iamOzawaKenji/status/1194764449896263680">Ozawa Kenji 小沢健二 on X: &quot;アルバム題の英訳はSo Kakkoii Pluriverse。宇宙をUniverseと訳すのは、僕は今は無理。Uniは一つという意味なので、一つの見方ではダメな今の時代、「一つの宇宙」は語感が悪い。そのためにPlural(複数の)を冠したPluriverseという言葉が現れ、今はただ”宇宙・世界”という意味で、僕は普通に耳にする。&quot; / X</a></li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+『風の歌を聴け』（村上春樹）
+
+> 「文章をかくという作業は、とりもなおさず自分と自分をとりまく事物との距離を確認することである。必要なものは感性ではなく、ものさしだ。」<!-- .element: class="quote" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+牡蠣フライ理論（村上春樹）
+
+> ただ、自分自身について書くのは不可能であっても、たとえば牡蠣フライについて原稿用紙四枚以内で書くことは可能ですよね。<!-- .element: class="quote" -->
+</div></script></section><section  data-markdown><script type="text/template">
+（中略）
+</script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 構造のデザイン
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## コンウェイの法則
+
+> Organizations which design systems (in the broad sense used here) are constrained to produce designs which are copies of the communication structures of these organizations.
+> 
+> システムを設計する組織は、そのコミュニケーション構造をそっくりまねた構造の設計を生み出してしまう
+</div>
+
+<aside class="notes"><ul>
+<li><a href="https://en.wikipedia.org/wiki/Conway%27s_law">Conway&#39;s law - Wikipedia</a></li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 宣言型プログラミング
+
+scheme の例
+
+```lisp
+(define (factorial n)
+    (if (= n 0)                     
+        1                             ;;; 0! = 1
+        (* n (factorial (- n 1)))))   ;;; n! = n*(n-1)!
+```
+
+`$\Sigma$` は loop
+
+`$\sum_{k=1}^{n}k=1+2+3+\cdots+n=\dfrac{n(n+1)}{2}$`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+手続きでフィボナッチ数列の n 番目の項を求める
+
+```rb
+def fibonacci(n):
+  a, b = 1, 0
+  for _ in range(n):
+    a, b = b, a + b
+  return b
+```
+
+フィボナッチ数列の一般項
+
+`$F_n=\frac{1}{\sqrt{5}}\left\{\left(\frac{1+\sqrt{5}}{2}\right)^n-\left(\frac{1-\sqrt{5}}{2}\right)^n\right\}$`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## セントラルドグマは<br>宣言型プログラミング
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+[DNA - Wikipedia](https://en.wikipedia.org/wiki/DNA)
+
+<img src="Public/Slide ▶️/エンジニアカフェ新年会 2024/images/726px-DNA_Structure+Key+Labelled.pn_NoBB.png" alt="" style="width: 600px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/エンジニアカフェ新年会 2024/images/DNA_chemical_structure.svg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+[Central dogma of molecular biology - Wikipedia](https://en.wikipedia.org/wiki/Central_dogma_of_molecular_biology)
+
+<img src="Public/Slide ▶️/エンジニアカフェ新年会 2024/images/Central_Dogma_of_Molecular_Biochemistry_with_Enzymes.jpg" alt="" style="width: 460px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+[Polymerase chain reaction - Wikipedia](https://en.wikipedia.org/wiki/Polymerase_chain_reaction)
+
+<img src="Public/Slide ▶️/エンジニアカフェ新年会 2024/images/Polymerase_chain_reaction-en.svg" alt="" style="width: 900px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template">
+（中略）
+</script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 「言語」という<br>テクノロジー
+
+[「言葉」を設計しよう、組織の「文化」を作るために｜宮崎ひび](https://note.com/hibi_myzk/n/nc0e4a88234ce)
+
+<img src="Article 📃/note 🗒/ひびの仕事 💻/images/rectangle_large_type_2_11ae9b5d8ae8beae4000c3b98d43b5dc.webp" alt="" style="width: 400px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/エンジニアカフェ新年会 2024/images/0815-sci-webSCIILLO.jpg" alt="" style="object-fit: scale-down">
+
+
+_The New York Times_ <!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## まとめ
+
+- 個ではなくネットワーク（環境）までをシステムとして捉えたデザイン
+	- ネットワークには AI も入ってくる
+- ノードだけでなくリンクへの働きかけ
+- 構造をデザインすることで、もうひとつの可能性を示す
+- 分野の壁を越えて歩き回りたい
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 今世紀の抱負
+
+簡潔に話す <!-- .element: class="ex-large-text" -->
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{id: 'toggle-overview',
+				title: 'Toggle overview (O)',
+				icon: '<i class="fa fa-th"></i>',
+				action: 'Reveal.toggleOverview();'
+				},
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"minScale":0.1,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
