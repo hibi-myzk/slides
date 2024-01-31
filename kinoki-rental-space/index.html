@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+	h1, h2, h3, h4, h5, h6 { text-transform: none !important }
+	h1 { font-size:  2.4em !important; color: #33B490 !important }
+	h2 { color: #33B490 !important }
+	h3 { color: #EC5D57 !important }
+	.no-margin { margin: 0 !important }
+	.small-text { font-size: 0.8em !important }
+	.ex-large-text { font-size: 4em !important }
+	.red { color: red }
+	li { margin-bottom: 0.5em }
+	
+	blockquote:has(.quote) {
+		/* max-width: 500px; */
+		position: relative;
+		padding: 2em !important;
+		margin: 2em 0;
+		border: none !important;
+		box-shadow: none;
+	}
+	
+	blockquote:has(.quote)::before,
+	blockquote:has(.quote)::after {
+		display: inline-block;
+		position: absolute;
+		width: 4em;
+		height: 4em;
+		content: '';
+	}
+	
+	blockquote:has(.quote)::before {
+	    top: 0;
+	    left: 0;
+	    border-top: 3px solid #89b6d7;
+	    border-left: 3px solid #89b6d7;
+	    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2389b6d7%22%20d%3D%22M21.8%2012H18V9c0-1.7%201.3-3%203-3h.4c.6%200%201.1-.5%201.1-1.1V2.6c0-.6-.5-1.1-1.1-1.1H21c-4.1%200-7.5%203.4-7.5%207.5v11.2c0%201.2%201%202.2%202.2%202.2h6c1.2%200%202.2-1%202.2-2.2v-6C24%2013%2023%2012%2021.8%2012zM8.2%2012H4.5V9c0-1.7%201.3-3%203-3h.4C8.5%206%209%205.5%209%204.9V2.6c0-.6-.5-1.1-1.1-1.1h-.4C3.4%201.5%200%204.9%200%209v11.2c0%201.2%201%202.2%202.2%202.2h6c1.2%200%202.2-1%202.2-2.2v-6c.1-1.2-.9-2.2-2.2-2.2z%22%2F%3E%3C%2Fsvg%3E');
+	    background-position: top 35% left 35%;
+	    background-size: 1em;
+	    background-repeat: no-repeat;
+	}
+	
+	blockquote:has(.quote)::after {
+	    bottom: 0;
+	    right: 0;
+	    border-bottom: 3px solid #89b6d7;
+	    border-right: 3px solid #89b6d7;
+	}
+	
+	blockquote:has(.quote) p {
+	    margin-top: 0;
+	}
+	
+	blockquote:has(.quote) p:last-of-type {
+	   margin-bottom: 0;
+	}
+</style>
+
+# <span style="font-size:90%"><span style="color:fuchsia">キッチン</span><span style="font-size:80%">も使える</span><span style="color:aqua">レンタルスペース</span><span style="font-size:80%">の紹介</span></span>
+
+## 🍣 <span style="color:teal">宮崎ひび</span>
+</div>
+
+<aside class="notes"><ul>
+<li>2023/01/22</li>
+<li><a href="https://satoken.connpass.com/event/265643/">福岡ゆるっともりっとLT大会 by サト研（仮） - connpass</a></li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🍣 宮崎ひび
+
+https://hibi.miyazaki.jp <!-- .element: class="small-text" -->
+
+株式会社トーフラボ　代表取締役 <!-- .element: class="no-margin" -->
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/tofulab_bannar.png" alt="" style="width: 300px; object-fit: fill">
+
+
+↓ <!-- .element: class="no-margin" -->
+
+イジゲングループ株式会社　テック座敷童子 <!-- .element: class="no-margin" -->
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/ijgngroup_bannar.png" alt="" style="width: 300px; object-fit: fill">
+</div>
+
+<aside class="notes"><img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/nishinihon_fh_logo.png" alt="" style="object-fit: scale-down">
+
+
+<p><a href="https://suzuri.jp/hibi_myzk">宮崎ひび ( hibi_myzk ) ∞ SUZURI</a></p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 興味あれば
+
+[イジゲングループ株式会社の会社情報 - Wantedly](https://www.wantedly.com/companies/ijgngroup)
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/ijgngroup_bannar.png" alt="" style="width: 600px; object-fit: fill">
+
+
+- エンジニア、デザイナー、コンサル、その他
+- 大分、福岡、宮崎、別府サテライト、飯塚？
+- 福岡は The Company 中洲川端（移転予定あり）
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## まなびや 木の木
+
+特定非営利活動法人<!-- .element: class="small-text" -->
+
+https://kinoki.jp
+
+<split left="1" right="1">
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/758590_455012.jpeg" alt="" style="width: 440px; object-fit: fill">
+
+
+- 子どもカレー食堂 <!-- .element: class="small-text" -->
+	- 第 1  土曜日、弥永保育園 <!-- .element: class="small-text" -->
+- 絵本の読み聞かせ会 <!-- .element: class="small-text" -->
+	- 第 2 土曜日、警固公民館 <!-- .element: class="small-text" -->
+- キラキラえがお福岡 <!-- .element: class="small-text" -->
+	- ひとり親家庭向け <!-- .element: class="small-text" -->
+	- 第 3 日曜日、木の木 <!-- .element: class="small-text" -->
+- その他 <!-- .element: class="small-text" -->
+	- 高齢者向け、全世代向け <!-- .element: class="small-text" -->  
+</split>
+</div>
+
+<aside class="notes"><p><a href="https://vimeo.com/537984311">キラキラえがお 太宰府 2021.03.21 on Vimeo</a></p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## レンタルスペースの紹介
+
+その前に…
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## BGM 準備中
+
+AI が即興作曲してくれるようです 🎵
+</div>
+
+<aside class="notes"><ul>
+<li><a href="https://sonic-pi.net">Sonic Pi - The Live Coding Music Synth for Everyone</a></li>
+<li><a href="https://magenta.tensorflow.org">Magenta</a></li>
+<li><a href="https://colab.research.google.com/drive/1ajX2w-AAiW7cLpBfLFDPBPLOIsJiK4fI?usp=sharing">Google Colab</a></li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## レンタルスペース 木の木
+
+|          |                      |
+| -------- | -------------------- |
+| 場所     | 薬院大通駅の上       |
+| 広さ     | 46 ㎡                |
+| 椅子     | 18 脚                |
+| テーブル | 4 人、6 人、円卓 x 2 |
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 内観
+
+<split even gap="1">
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_view_1.jpeg" alt="" style="width: 440px; object-fit: fill">
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_view_2.jpeg" alt="" style="width: 440px; object-fit: fill">
+
+</split>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<iframe class="embed_iframe" src="https://s.insta360.com/p/0278355e1a47a69a7696a5e1a7e06f70?e=true&locale=en-us" frameborder="0" width="900" height="600"></iframe>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## キッチン利用可能
+
+料理を食べながらのイベントに。
+
+<split left="1" right="1">
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_kitchen_1.jpeg" alt="" style="width: 600px; object-fit: fill">
+
+
+- キッチン
+- 調理器具
+- 食器
+</split>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<split even gap="1">
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_kitchen_1.jpeg" alt="" style="width: 400px; object-fit: fill">
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_kitchen_2.jpeg" alt="" style="width: 400px; object-fit: fill">
+
+</split>
+<split even gap="1">
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_dishes_1.jpeg" alt="" style="width: 400px; object-fit: fill">
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_dishes_2.jpeg" alt="" style="width: 400px; object-fit: fill">
+
+</split>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 撮影機材も利用可能
+
+料理系 YouTuber にも
+
+<split left="1" right="1">
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_doga_items.jpg" alt="" style="width: 600px; object-fit: fill">
+
+
+- 三脚
+- スマホホルダー
+- ビデオライト（2 灯）
+</split>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## その他利用できるもの
+
+<split left="1" right="1">
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/kinoki_garelly.jpeg" alt="" style="width: 600px; object-fit: fill">
+
+
+- Wi-Fi
+- 電源
+- ホワイトボード
+- 壁をギャラリーとしても利用可能
+</split>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## レンタル費用
+
+稼働準備中につきお試し利用できます。 <!-- .element: class="red" -->
+
+| プラン                | 費用      | 1 時間換算 |
+| --------------------- | --------- | ------------ |
+| 基本の 1 時間         | 2,000 円  | 2,000 円     |
+| 4 時間パック          | 7,200 円  | 1,800 円     |
+| 8 時間パック          | 13,800 円 | 1,700 円     |
+| 1 日プラン（12 時間） | 20,000 円 | 1,666 円     |
+| おひとり様プラン      | 1,500 円  | 1,500 円     |
+| 3 日以上長期プラン    | 15,000 円 | 1,250 円     |
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## お問い合わせ
+
+宮崎まで何らかの方法でご連絡ください。
+
+🍣🍣🍣🍣
+
+### お問い合わせフォーム
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/QR_kinoki_space_contact.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/QR_kinoki_space_contact.png" alt="" style="width: 600px; object-fit: fill">
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{id: 'toggle-overview',
+				title: 'Toggle overview (O)',
+				icon: '<i class="fa fa-th"></i>',
+				action: 'Reveal.toggleOverview();'
+				},
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"minScale":0.1,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
