@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+	h1, h2, h3, h4, h5, h6 { text-transform: none !important }
+	h1 { font-size:  2.4em !important; color: #33B490 !important }
+	h2 { color: #33B490 !important }
+	h3 { color: #EC5D57 !important }
+	.no-margin { margin: 0 !important }
+	.small-text { font-size: 0.8em !important }
+	.ex-large-text { font-size: 4em !important }
+	.red { color: red }
+	li { margin-bottom: 0.5em }
+	
+	blockquote:has(.quote) {
+		/* max-width: 500px; */
+		position: relative;
+		padding: 2em !important;
+		margin: 2em 0;
+		border: none !important;
+		box-shadow: none;
+	}
+	
+	blockquote:has(.quote)::before,
+	blockquote:has(.quote)::after {
+		display: inline-block;
+		position: absolute;
+		width: 4em;
+		height: 4em;
+		content: '';
+	}
+	
+	blockquote:has(.quote)::before {
+	    top: 0;
+	    left: 0;
+	    border-top: 3px solid #89b6d7;
+	    border-left: 3px solid #89b6d7;
+	    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2389b6d7%22%20d%3D%22M21.8%2012H18V9c0-1.7%201.3-3%203-3h.4c.6%200%201.1-.5%201.1-1.1V2.6c0-.6-.5-1.1-1.1-1.1H21c-4.1%200-7.5%203.4-7.5%207.5v11.2c0%201.2%201%202.2%202.2%202.2h6c1.2%200%202.2-1%202.2-2.2v-6C24%2013%2023%2012%2021.8%2012zM8.2%2012H4.5V9c0-1.7%201.3-3%203-3h.4C8.5%206%209%205.5%209%204.9V2.6c0-.6-.5-1.1-1.1-1.1h-.4C3.4%201.5%200%204.9%200%209v11.2c0%201.2%201%202.2%202.2%202.2h6c1.2%200%202.2-1%202.2-2.2v-6c.1-1.2-.9-2.2-2.2-2.2z%22%2F%3E%3C%2Fsvg%3E');
+	    background-position: top 35% left 35%;
+	    background-size: 1em;
+	    background-repeat: no-repeat;
+	}
+	
+	blockquote:has(.quote)::after {
+	    bottom: 0;
+	    right: 0;
+	    border-bottom: 3px solid #89b6d7;
+	    border-right: 3px solid #89b6d7;
+	}
+	
+	blockquote:has(.quote) p {
+	    margin-top: 0;
+	}
+	
+	blockquote:has(.quote) p:last-of-type {
+	   margin-bottom: 0;
+	}
+</style>
+
+# 「言葉」と「名前」<br>をめぐるソフトウェア<br>エンジニアの冒険
+</div>
+
+<aside class="notes"><p>2023/01/27</p>
+<ul>
+<li><a href="https://ijgngroup.connpass.com/event/273313/">「飯塚 LT 大会」と「将来が不安カンファレンス」と「ピザ」 vol.1 - connpass</a></li>
+<li><a href="https://note.com/hibi_myzk/n/nc0e4a88234ce">「言葉」を設計しよう、組織の「文化」を作るために｜宮崎ひび｜note</a></li>
+<li>プログラミングは「名前」が9割。</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🍣 宮崎ひび
+
+https://hibi.miyazaki.jp
+
+### イジゲングループ株式会社
+テック座敷童子（自称）  
+CHAOS TIMES 編集長（自称）
+
+<img src="Public/Slide ▶️/福岡ゆるっともりっとLT大会 by サト研（仮）/images/ijgngroup_bannar.png" alt="" style="width: 500px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 仕事 as a 趣味の延長 (SaaS)
+
+### Wantedly で公開
+
+- [ソフトウェアエンジニアの愉しみ](https://www.wantedly.com/companies/ijgngroup/post_articles/466912)<!-- .element: class="small-text" -->
+- [ソフトウェアエンジニアの健康ハック（資源の消費削減編）](https://www.wantedly.com/companies/ijgngroup/post_articles/470054)<!-- .element: class="small-text" -->
+- [現役ソフトウェアエンジニアが大学共通テスト「情報Ⅰ」を解いてみた](https://www.wantedly.com/companies/ijgngroup/post_articles/487175)<!-- .element: class="small-text" -->
+
+### イベント
+
+- [「飯塚 LT 大会」と「将来が不安カンファレンス」と「ピザ」 vol.1](https://ijgngroup.connpass.com/event/273313/)<!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 仕事 as a 趣味の延長 (SaaS)
+
+### 社内限定公開
+
+* 💎 ブロックチェーン上で過ごした GW の感想 2022<!-- .element: class="small-text" -->
+* 🥷 ミラクルに憧れつつ検尿を提出する仕事論<!-- .element: class="small-text" -->
+* 🥰 感情分析 bot を作ってみた<!-- .element: class="small-text" -->
+* 📚 とある CTO の読書案内 2022 GW 2<!-- .element: class="small-text" -->
+* 🤹 最も賢い人々が週末にやっていることが、10年後の他のすべての人々が平日にやっていることになる<!-- .element: class="small-text" -->
+* などなど<!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 個人活動
+
+<split left="1" right="1">
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/hibi_speaking_in_taiwan.jpg" alt="" style="width: 400px; object-fit: fill">
+
+
+
+- シングルファーザー
+- 執筆、登壇
+- ボランティアカメラマン
+- その他
+</split>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/シングルぱぱ起業家はがんばらない_amazon.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><p><a href="https://amzn.to/3DGedvV">Amazon.co.jp: シングルパパ起業家はがんばらない　自由に生きる思考法 eBook : 宮崎ひび: 本</a></p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<iframe width="840" height="469.5" src="https://www.youtube.com/embed/PMptcTD3XDE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<iframe width="840" height="469.5" src="https://www.youtube.com/embed/ohGJ-fMvM5k?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 最近興味あること
+
+- web 3
+	- Smart Contract > Deploy > △ ￥500,000 <!-- .element: class="small-text" -->
+- ゼロ知識証明
+	- Blockchain > ZK Rollup >ゼロ知識証明 <!-- .element: class="small-text" -->
+- 圏論
+	- 純粋関数型言語 > Haskell > IO monad > 圏論 <!-- .element: class="small-text" -->
+- 量子コンピュータ
+	- [スイッチサイエンス、量子コンピュータ始めるってよ – スイッチサイエンス マガジン](https://mag.switch-science.com/2022/09/19/spinq/) <!-- .element: class="small-text" -->
+		- ¥1,188,000 <!-- .element: class="small-text" -->
+			- 購入申請 → 却下 <!-- .element: class="small-text" -->
+</div>
+
+<aside class="notes"><ul>
+<li>旧タイトル「生物学出身ソフトウェアエンジニアが工学系の学生さんに教えてほしいこと」</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+##  ずっと興味あること
+
+「言葉」 <!-- .element: class="ex-large-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/「言葉」を設計しよう.002.jpeg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/「言葉」を設計しよう.003.jpeg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/B00H6XBHMY.01._SCLZZZZZZZ_SX500_.jpg" alt="" style="object-fit: scale-down">
+
+
+[Amazon.co.jp: グレート・ギャッツビー (光文社古典新訳文庫) eBook : フィッツジェラルド, 小川 高義: 本](https://amzn.to/3HaV3yT)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/「言葉」を設計しよう.004.jpeg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 分かる = 分ける
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/B009FUWQ62.01._SCLZZZZZZZ_SX500_.jpg" alt="" style="object-fit: scale-down">
+
+
+[寝ながら学べる構造主義 (文春新書) | 内田 樹 | 哲学・思想 | Kindleストア | Amazon](https://amzn.to/3Dj0bzY)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/「言葉」を設計しよう.005.jpeg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- [総論 複数のプログラミング言語を学ぶ意義 | 日経クロステック（xTECH）](https://xtech.nikkei.com/it/article/COLUMN/20070618/275142/)
+- [まつもとゆきひろ氏が明かす、Rubyの原点　プログラミング言語を作ろうと思った理由 - ログミーTech](https://logmi.jp/tech/articles/322453)
+- [Rubyの父・まつもとゆきひろを「言語」に誘った本 | 日経BOOKプラス](https://bookplus.nikkei.com/atcl/column/041500052/041500001/)
+	- 『[バベル-17](https://amzn.to/3kNnaNh)』（サミュエル・R・ディレーニイ著、ハヤカワ文庫）
+</div>
+
+<aside class="notes"><ul>
+<li>複数のプログラミング言語を学ぶ意義</li>
+<li>Rubyの父・まつもとゆきひろを「言語」に誘った本</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### プログラミング言語が<br>思考を変える例
+
+- 関数型言語を使ってみる
+	- `map` や `reduce` など
+		- 手続き型の言語にも取り入れられている
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/「言葉」を設計しよう.006.jpeg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/B01LW1BC2L.01._SCLZZZZZZZ_SX500_.jpg" alt="" style="object-fit: scale-down">
+
+
+[Amazon.co.jp: ノンデザイナーズ・デザインブック　［第4版］ eBook : Robin Williams, 吉川 典秀, 小原 司, 米谷 テツヤ（日本語版解説）: 本](https://amzn.to/3kLguiy) <!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 青木まりこ現象
+
+[青木まりこ現象 - Wikipedia](https://ja.wikipedia.org/wiki/青木まりこ現象)
+
+> **青木まりこ現象**（あおきまりこげんしょう）とは、[書店](https://ja.wikipedia.org/wiki/%E6%9B%B8%E5%BA%97 "書店")に足を運んだ際に突如こみあげる[便意](https://ja.wikipedia.org/wiki/%E4%BE%BF%E6%84%8F "便意")に対して与えられた呼称である。
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ツァイガルニク効果
+
+[ツァイガルニク効果 - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%84%E3%82%A1%E3%82%A4%E3%82%AC%E3%83%AB%E3%83%8B%E3%82%AF%E5%8A%B9%E6%9E%9C)
+
+> **ツァイガルニク効果**（ツァイガルニクこうか、Zeigarnik effect）は、人は達成できなかった事柄や中断している事柄のほうを、達成できた事柄よりもよく覚えているという現象。
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## コンウェイの法則
+
+[メルヴィン・コンウェイ - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%A1%E3%83%AB%E3%83%B4%E3%82%A3%E3%83%B3%E3%83%BB%E3%82%B3%E3%83%B3%E3%82%A6%E3%82%A7%E3%82%A4)
+
+> 「システムを設計する組織は、そのコミュニケーション構造をそっくりまねた構造の設計を生み出してしまう」
+(原文: "Organizations which design systems are constrained to produce designs which are copies of the communication structures of these organizations.")
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/「言葉」を設計しよう.007.jpeg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/4274065979.01._SCLZZZZZZZ_SX500_.jpg" alt="" style="object-fit: scale-down">
+
+
+[ハッカーと画家 コンピュータ時代の創造者たち | ポール グレアム, Graham,Paul, 史朗, 川合 |本 | 通販 | Amazon](https://amzn.to/3WIvI52) <!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## プログラミング言語の力（例）
+
+- オブジェクト指向<!-- .element: class="small-text" -->
+- 高階関数<!-- .element: class="small-text" -->
+- マクロ<!-- .element: class="small-text" -->
+- 並行処理<!-- .element: class="small-text" -->
+- 型推論<!-- .element: class="small-text" -->
+- 遅延評価<!-- .element: class="small-text" -->
+- ジェネリクス<!-- .element: class="small-text" -->
+- などなど<!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/「言葉」を設計しよう.008.jpeg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/B00GRKD6XU.01._SCLZZZZZZZ_SX500_.jpg" alt="" style="object-fit: scale-down">
+
+
+[エリック・エヴァンスのドメイン駆動設計 | Eric Evans, 和智右桂, 牧野祐子, 今関剛 | 工学 | Kindleストア | Amazon](https://amzn.to/3HzWl84) <!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/「言葉」を設計しよう.009.jpeg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/B00O2O7JEA.01._SCLZZZZZZZ_SX500_.jpg" alt="" style="object-fit: scale-down">
+
+
+[あなたの人生の物語 | テッド チャン, 浅倉久志 | 英米の小説・文芸 | Kindleストア | Amazon](https://amzn.to/407Iv43) <!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/B009DEMA02.01._SCLZZZZZZZ_SX500_.jpg" alt="" style="object-fit: scale-down">
+
+
+
+[虐殺器官 (ハヤカワ文庫JA) | 伊藤 計劃 | 日本の小説・文芸 | Kindleストア | Amazon](https://amzn.to/3j5d0Ho) <!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## プログラミングは<br>「名前」が 9 割
+
+- 適切な名前をつけたら勝ったも同然
+	- 時間をかける
+	- リファクタする
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## プログラミングは<br>「名前」が 9 割
+
+- ハードウェアの制約
+	- メモリ、ディスプレイ、パンチカード <!-- .element: class="small-text" -->
+- LISP の変数名は長い（諸説あります）
+	- 変数名にメタ情報を載せたい（型情報など） <!-- .element: class="small-text" -->
+		- Clojure の meta <!-- .element: class="small-text" -->
+- IDE の進化
+	- 型情報のプレフィックス <!-- .element: class="small-text" -->
+- Ruby の `group.has_member?`
+</div>
+
+<aside class="notes"><ul>
+<li><a href="https://valvallow.blogspot.com/2010/06/lispscheme_20.html">vallog: なんで Lisp/Scheme の変数名は長いの？</a></li>
+<li>1行78文字ポリシー</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 設計も「名前」が 9 割
+
+クラス図が<br>動き出す。 <!-- .element: class="ex-large-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## GitHub Copilot
+
+[GitHub Copilot · Your AI pair programmer · GitHub](https://github.com/features/copilot/)
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/github_copilot_page.png" alt="" style="width: 600px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/飯塚 LT vol.1/images/Mark_IjgnGroup_Color.png" alt="" style="width: 600px; object-fit: fill">
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{id: 'toggle-overview',
+				title: 'Toggle overview (O)',
+				icon: '<i class="fa fa-th"></i>',
+				action: 'Reveal.toggleOverview();'
+				},
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"minScale":0.1,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
