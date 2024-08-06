@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+    body { padding: 0 1em }
+	h1, h2, h3, h4, h5, h6 { text-transform: none !important }
+    h1, h2, h3, h4, h5, h6 { font-family: var(--r-main-font)  !important }
+    h3, h4, h5, h6 { font-weight: bold !important }
+	h1 { font-size:  2.4em !important; color: #33B490 !important }
+	h2 { color: #33B490 !important }
+	h3 { color: #EC5D57 !important }
+	.no-margin { margin: 0 !important }
+	.small-text { font-size: 0.8em !important }
+	.ex-large-text { font-size: 4em !important }
+	.red { color: red }
+	li { margin-bottom: 0.5em }
+
+    .reveal .code-wrapper code {
+      white-space: pre-wrap;
+      max-height: 560px;
+    }
+	
+	blockquote:has(.quote) {
+		/* max-width: 500px; */
+		position: relative;
+		padding: 2em !important;
+		margin: 2em 0;
+		border: none !important;
+		box-shadow: none;
+	}
+	
+	blockquote:has(.quote)::before,
+	blockquote:has(.quote)::after {
+		display: inline-block;
+		position: absolute;
+		width: 4em;
+		height: 4em;
+		content: '';
+	}
+	
+	blockquote:has(.quote)::before {
+	    top: 0;
+	    left: 0;
+	    border-top: 3px solid #89b6d7;
+	    border-left: 3px solid #89b6d7;
+	    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2389b6d7%22%20d%3D%22M21.8%2012H18V9c0-1.7%201.3-3%203-3h.4c.6%200%201.1-.5%201.1-1.1V2.6c0-.6-.5-1.1-1.1-1.1H21c-4.1%200-7.5%203.4-7.5%207.5v11.2c0%201.2%201%202.2%202.2%202.2h6c1.2%200%202.2-1%202.2-2.2v-6C24%2013%2023%2012%2021.8%2012zM8.2%2012H4.5V9c0-1.7%201.3-3%203-3h.4C8.5%206%209%205.5%209%204.9V2.6c0-.6-.5-1.1-1.1-1.1h-.4C3.4%201.5%200%204.9%200%209v11.2c0%201.2%201%202.2%202.2%202.2h6c1.2%200%202.2-1%202.2-2.2v-6c.1-1.2-.9-2.2-2.2-2.2z%22%2F%3E%3C%2Fsvg%3E');
+	    background-position: top 35% left 35%;
+	    background-size: 1em;
+	    background-repeat: no-repeat;
+	}
+	
+	blockquote:has(.quote)::after {
+	    bottom: 0;
+	    right: 0;
+	    border-bottom: 3px solid #89b6d7;
+	    border-right: 3px solid #89b6d7;
+	}
+	
+	blockquote:has(.quote) p {
+	    margin-top: 0;
+	}
+	
+	blockquote:has(.quote) p:last-of-type {
+	   margin-bottom: 0;
+	}
+</style>
+
+# Rails 中心の開発チームが知見ゼロから<br>Go + Remix + WebAssembly で自社サービスをリリースした 3 ヶ月半のこと
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## # ゼロリリ
+
+_2024.07.26_
+
+イジゲングループ株式会社  
+~~テック座敷童~~  
+テックリード  
+宮崎ひび  
+🍣🍣🍣🍣
+</div>
+
+<aside class="notes"><ul>
+<li>2024/07/26</li>
+<li><a href="https://connpass.com/event/321356/">Kizuku.go Vol.1 - connpass</a></li>
+<li>Go イベント発表資料 Draft</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 🍣 宮崎ひび
+
+https://hibi.miyazaki.jp
+
+- ソフトウェアエンジニア
+- ~~シングル~~ ファーザー
+    - [💍 おすすめの入籍日 by ChatGPT](https://chatgpt.com/share/448805c9-9283-4150-bc35-ffb2ed0e5a14)<!-- .element: class="small-text" -->
+- ボランティアカメラマン
+- 本を読む人
+    - [『多元世界に向けたデザイン　ラディカルな相互依存性、自治と自律、そして複数の世界をつくること』アルトゥーロ・エスコバル](https://www.amazon.co.jp/dp/B0CVWZVF7X)<!-- .element: class="small-text" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## エンジニアっぽい活動
+
+- [「言葉」を設計しよう、組織の「文化」を作るために｜宮崎ひび](https://note.com/hibi_myzk/n/nc0e4a88234ce)<!-- .element: class="small-text" -->
+- [1on1 ミーティングのトピックを NFT にしました | エンジニアブログ](https://www.wantedly.com/companies/ijgngroup/post_articles/500219)<!-- .element: class="small-text" -->
+- [「知らんけど」を「諸説あります」に変換する Chrome 拡張機能 (Rust + WebAssembly) | エンジニアブログ](https://www.wantedly.com/companies/ijgngroup/post_articles/503293)<!-- .element: class="small-text" -->
+- [OITA.md | Markdown City Oita](https://oita.md/)<!-- .element: class="small-text" -->
+- [The First Misfortune of 2024 - Misfortune | OpenSea](https://opensea.io/assets/matic/0xd8517a740d57cfd018abafa389e7d5cb37e31561/0)<!-- .element: class="small-text" -->
+</div>
+
+<aside class="notes"><ul>
+<li>「言葉」を設計しよう、組織の「文化」を作るために</li>
+<li>1on1 ミーティングのトピックを NFT にしました</li>
+<li>「知らんけど」を「諸説あります」に変換する Chrome 拡張機能 (Rust + WebAssembly)</li>
+<li>Oita.md</li>
+<li>The First Misfortune of 2024</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## お仕事
+
+なんでもやる
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> 高度に発達した<br>ソフトウェアエンジニアは<br>雑用と見分けがつかない<!-- .element: class="quote" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/ijgngroup_logo_202707.jpg" alt="" style="width: 800px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/super_rizin_3.jpg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## アジェンダ（全体）
+
+1. プロジェクトの概要
+2. Go (API) の実装
+    - アドバイスください 🥺
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## プロジェクト概要
+
+- [人的資本経営の組織力強化支援ツール｜ポテンシャルクラウド](https://potential-cloud.jp/)
+
+_イケてるスクショが入る_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/service.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Front + API 構成にしたい
+
+- クライアントから
+    - UI だけ別物にして別企業でも使いたい
+    - 既存の Web アプリと同じ機能を持ったネイティブアプリを作りたい
+- ビジネス＋テック
+    - DX の文脈
+        - マイクロサービスまではやらないけど
+    - LLM への提供
+        - Function Calling で呼ばれたい
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## メンバー構成
+
+- Ruby や PHP 中心
+    - 静的型付け言語は不慣れ
+- Rails や Laravel でモノリシックなサービス開発
+    - あれこれ隠蔽されがち
+- 宮崎
+    - マルチプラットフォーム
+        - iPhone アプリは初期から開発
+    - マルチパラダイム
+        - Haskell 好き
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 戦略
+
+- 縦割り（機能単位）で開発
+    - ひと通り経験してもらう
+- 宮崎が高速道路を作ってその上を走ってもらう
+    - 一部、間に合わずに割り箸を使って建設
+- Shallow Module を避ける
+    - _"A Philosophy of Software Design"_
+- まずは全タスク 8 割完了を目指す
+    - 80:20 の法則
+- AI を活用する
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/pirate_flag.jpeg" alt="" style="object-fit: scale-down">
+
+
+_海軍に入るより海賊であれ_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 全体像
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/trlly_overview.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><ul>
+<li>全体構成（抜粋）</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 追加メンバー
+
+- ChatGPT
+- Llama 2
+- GitHub Copilot
+- OpenInterpreter
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## アジェンダ (API)
+
+1. 全体構成
+2. フレームワーク
+3. データまわり
+4. ミドルウェア
+5. 数学
+6. セキュリティ
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 全体構成 (API)
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/trlly_overview_api.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><ul>
+<li>全体構成 (API)</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## フレームワーク
+
+- Gin
+    - 薄さ
+        - 黒魔法から解き放たれたい
+    - 情報量
+        - Google
+        - ChatGPT
+        - Copilot Chat
+    - 拡張性
+        - ミドルウェア
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## データまわり
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/desc_codegen.png" alt="" style="width: 800px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Mermaid による一元管理
+
+- カラム名（英語）と日本語の対応
+- Mermaid 記法に validation を追加
+
+```
+ companies["企業"] {
+    int id PK "企業ID NOT NULL AUTO_INCREMENT"
+    string code UK "企業コード"
+    int industry_id FK "業種ID NOT NULL"
+    string name "企業名 [max=255] NOT NULL"
+    int min_display "表示最小数 [number,min=2] NOT NULL DEFAULT 0"
+  }
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Mermaid から DDL を作成
+
+- `CREATE TABLE` 文を生成
+    - index や制約も追加
+    - COMMENT も入る
+- Python スクリプト
+    - そこは Python かいっ！
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Model の生成
+
+- [xo](https://github.com/xo/xo)
+    - テンプレートをカスタマイズ
+        - `binding` の追加
+- `NullString`
+    - `MarshalJSON`, `UnmarshalJSON` を制御
+
+```go
+type Company struct {
+	ID         int        `json:"id"`
+	Code       NullString `json:"code"`
+	IndustryID int        `json:"industry_id" binding:"required"`
+	Name       string     `json:"name" binding:"max=255,required"`
+	MinDisplay int        `json:"min_display" binding:"number,min=2,required"`
+}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Validation
+
+- Gin の `ShouldBind` をラップ
+    - 前述の `binding` を利用
+    - Front に優しい形式で返す
+
+```go
+func CreateCompany(b *Base) {
+	var company m.Company
+	validationErrors := bindModel(b.C, &company)
+	if validationErrors != nil {
+		b.ValidationError(validationErrors)
+		return
+	}
+    
+    // 中略
+    
+    b.OK(h{"company": company})
+}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### その他
+
+- データアクセス
+    - xo の Model と [Bun](https://github.com/uptrace/bun) が混在
+        - 改善ポイント
+- マイグレーション
+    - [sqldef](https://github.com/sqldef/sqldef)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 自作ミドルウェア
+
+- DB コネクションの一元管理
+    - Serverless と RDBMS 相性悪い問題
+        - 最終的に RDS Proxy で対応
+- 認証・認可
+- セッション管理
+- ID ↔︎ コード変換（後述）
+- などなど
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+##  数学的な何か
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ID ↔︎ コード変換
+
+- `最小完全ハッシュ関数`
+    - 逆変換は `拡張ユークリッドの互除法`
+
+<img src="Public/Learning 📖/Math/images/Hash_table_4_1_0_0_0_0_0_LL.svg" alt="" style="width: 500px; object-fit: fill">
+
+
+$
+f(n) = (n \times \rm{PRIME}) \mod \rm{MAX} + 1
+$
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### レポートの集計
+
+- たくさんのデータを
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/report1.png" alt="" style="width: 800px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- リアルタイムに計算
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/report2.png" alt="" style="width: 800px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### WebAssembly で行列計算
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/equation.jpg" alt="" style="width: 600px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> Rust で書いた。<br>後悔はしてない。<br>（犯人による供述）<!-- .element: class="quote" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## セキュリティ
+
+- [ASVS 4.0](https://coky-t.gitbook.io/owasp-asvs-ja)
+    - [OWASP](https://owasp.org/www-chapter-japan/)
+    - Level 1 準拠（一部未対応）
+- [securego/gosec: Go security checker](https://github.com/securego/gosec)
+    - 静的解析
+    - CI (GitHub Actions) に組み込み
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Go の感想
+
+- 静的型付け言語の安心感
+- 読みやすい！
+- 後方互換性の高さ
+- ベストプラクティスがわからん
+- RSpec ... 別れても好きな人
+- `defer` が Swift と違って罠
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 今後の展望
+
+- テストコードの書き方の工夫
+- Front と API でリポジトリ分ける
+    - （逆）コンウェイの法則
+    - API doc ちゃんと書く（生成する）
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 最後に
+
+いろいろ教えてください 🥺
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 時間あれば
+
+- バーンダウンチャート
+- ニコニコカレンダー
+- ZINE
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### バーンダウンチャート
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/burndown1.png" alt="" style="width: 680px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ニコニコカレンダー
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/nikoniko1.png" alt="" style="width: 680px; object-fit: fill">
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/nikoniko2.png" alt="" style="width: 680px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ZINE
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/zine.jpeg" alt="" style="width: 680px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Public/Slide ▶️/Kizuku.go Vol.1/images/super_rizin_3_logo.jpg" alt="" style="object-fit: scale-down">
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{id: 'toggle-overview',
+				title: 'Toggle overview (O)',
+				icon: '<i class="fa fa-th"></i>',
+				action: 'Reveal.toggleOverview();'
+				},
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"minScale":0.1,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

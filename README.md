@@ -1,5 +1,9 @@
 # Hibi's Slides
 
+- ▶️ [Rails 中心の開発チームが知見ゼロから Go + Remix + WebAssembly で自社サービスをリリースした 3 ヶ月半のこと](https://slides.hibi.miyazaki.jp/go-zero-to-release)
+	- 🎫 [Kizuku.go Vol.1 - connpass](https://connpass.com/event/321356/)
+	- 🗓️ 2024/07/26
+	- 📍 エンジニアカフェ
 - ▶️ [今世紀の抱負 21](https://slides.hibi.miyazaki.jp/21st-century-aspiration)
 	- 🎫 [エンジニアカフェ新年会 2024 - connpass](https://engineercafe.connpass.com/event/307519/)
 	- 🗓️ 2023/01/22
